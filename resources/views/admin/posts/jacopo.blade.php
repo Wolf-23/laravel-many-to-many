@@ -16,6 +16,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author</th>
+                <th scope="col">Category</th>
+                <th scope="col">Tag</th>
                 <th scope="col" class="text-center">Gestisci</th>
               </tr>
             </thead>
@@ -25,6 +27,16 @@
                     <th scope="row">{{$post->id}}</th>
                     <td>{{$post->title}}</td>
                     <td>{{$post->author}}</td>
+                    <td>{{($post->category)?$post->category->name:'Nessuna Categoria'}}</td>
+                    <td>
+                      @if (count($post->tags))
+                        @foreach ($post->tags as $tag)
+                          - {{($tag->name)}}
+                        @endforeach
+                      @else
+                        <div>Nessun Tag</div>
+                      @endif
+                    </td>
                     <td class="text-center">
                         <a href="{{route('admin.posts.show', ['post' => $post->id])}}" class="btn btn-success">Vedi</a>
                         <a href="{{route('admin.posts.edit', ['post' => $post->id])}}"  class="btn btn-warning">Modifica</a>

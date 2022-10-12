@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-      <a href="{{route('admin.categories.create')}}" class="btn btn-success mb-3">Crea Nuova Categoria</a>
-      {{-- <div class="d-flex justify-content-between">
+        {{-- <div class="d-flex justify-content-between">
+          <a href="{{route('admin.categories.create')}}" class="btn btn-success mb-3">Crea Nuova Categoria</a>
         <div>
           <a href="{{route('admin.posts.simone')}}" class="btn btn-primary mb-3">Post Simone</a>
           <a href="{{route('admin.posts.alessio')}}" class="btn btn-primary mb-3">Post Alessio</a>
@@ -14,28 +14,27 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
+                <th scope="col">Name</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Numero Post</th>
-                <th scope="col" class="text-center">Gestisci</th>
               </tr>
             </thead>
             <tbody class="table-light text-dark">
-                @foreach ($categories as $category)
+                @foreach ($tags as $tag)
                 <tr>
-                    <th scope="row">{{$category->id}}</th>
-                    <td>{{$category->name}}</td>
-                    <td>{{$category->slug}}</td>
-                    <td class="px-5">{{count($category->posts)}}</td>
-                    <td class="text-center">
-                        <a href="{{route('admin.categories.show', ['category' => $category->id])}}" class="btn btn-success">Vedi</a>
-                        <a href="{{route('admin.categories.edit', ['category' => $category->id])}}"  class="btn btn-warning">Modifica</a>
-                        <form class="d-inline-block" action="{{route('admin.categories.destroy', ['category' => $category])}}" method="POST">
+                    <th scope="row">{{$tag->id}}</th>
+                    <td>{{$tag->name}}</td>
+                    <td>{{$tag->slug}}</td>
+                    <td class="px-5">{{count($tag->posts)}}</td>
+                    {{-- <td class="text-center">
+                        <a href="{{route('admin.categories.show', ['tag' => $tag->id])}}" class="btn btn-success">Vedi</a>
+                        <a href="{{route('admin.categories.edit', ['tag' => $tag->id])}}"  class="btn btn-warning">Modifica</a>
+                        <form class="d-inline-block" action="{{route('admin.categories.destroy', ['tag' => $tag])}}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger">Elimina</button>
                         </form>
-                    </td> 
+                    </td>  --}}
                 </tr>
                 @endforeach
             </tbody>

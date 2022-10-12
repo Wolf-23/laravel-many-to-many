@@ -24,6 +24,7 @@ Route::middleware('auth')
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('posts', 'PostController');
     Route::resource('categories', 'CategoryController');
+    Route::resource('tags', 'TagController');
     Route::get('/simone', 'PostController@showSimone')->name('posts.simone');
     Route::get('/alessio', 'PostController@showAlessio')->name('posts.alessio');
     Route::get('/jacopo', 'PostController@showJacopo')->name('posts.jacopo');

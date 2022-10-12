@@ -43,6 +43,11 @@
                                     <a class="nav-link text-dark" href="{{ route('admin.categories.index') }}">Gestione delle categorie</a>
                                 </li>
                             </ul>
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="{{ route('admin.tags.index') }}">Gestione dei tag</a>
+                                </li>
+                            </ul>
                         </div>
 
 

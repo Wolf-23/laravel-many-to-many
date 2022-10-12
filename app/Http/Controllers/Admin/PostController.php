@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
@@ -40,7 +41,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -57,7 +59,8 @@ class PostController extends Controller
                 'media' => 'required|max:255|url',
                 'author' => ['required', Rule::in(['Simone Giusti', 'Alessio Vietri', 'Jacopo Damiani'])],
                 'content' => 'required|max:65535',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'exists:tags,id'
             ]
             );
             $data = $request->all();
@@ -66,6 +69,10 @@ class PostController extends Controller
             $slug = $this->slugCalc($post->title);
             $post->slug = $slug;
             $post->save();
+
+            if(array_key_exists('tags', $data)) {
+                $post->tags()->sync($data['tags']);
+            }
             return redirect()->route('admin.posts.index')->with('status', 'Post creato con successo!');
     }
 
@@ -131,6 +138,8 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index')->with('deleted', 'Il post è stato eliminato!');
     }
 
+    // FUNZIONI CUSTOM
+    
     public function showSimone(Post $post)
     {
         $posts = Post::where('author', 'Simone Giusti')->get();
