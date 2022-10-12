@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Admin;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
+
+    protected function slugCalc($title) {
+        $slug = Str::slug($title, '-');
+        $check = Tag::where('slug', $slug)->first();
+        $counter = 1;
+        while($check) {
+            $slug = Str::slug($title . '-' . $counter . '-');
+            $counter++;
+            $check = Tag::where('slug', $slug)->first();
+        }
+        return $slug;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +38,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -36,7 +49,18 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required|max:255',
+            ]
+            );
+            $data = $request->all();
+            $tag = new Tag;
+            $tag->fill($data);
+            $slug = $this->slugCalc($tag->title);
+            $tag->slug = $slug;
+            $tag->save();
+            return redirect()->route('admin.tags.index')->with('status', 'Tag creato con successo!');
     }
 
     /**
@@ -45,9 +69,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        //
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**

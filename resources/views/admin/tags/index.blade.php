@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
+      <a href="{{route('admin.tags.create')}}" class="btn btn-success mb-3">Crea Nuovo Tag</a>
         {{-- <div class="d-flex justify-content-between">
-          <a href="{{route('admin.categories.create')}}" class="btn btn-success mb-3">Crea Nuova Categoria</a>
         <div>
           <a href="{{route('admin.posts.simone')}}" class="btn btn-primary mb-3">Post Simone</a>
           <a href="{{route('admin.posts.alessio')}}" class="btn btn-primary mb-3">Post Alessio</a>
@@ -26,15 +26,15 @@
                     <td>{{$tag->name}}</td>
                     <td>{{$tag->slug}}</td>
                     <td class="px-5">{{count($tag->posts)}}</td>
-                    {{-- <td class="text-center">
-                        <a href="{{route('admin.categories.show', ['tag' => $tag->id])}}" class="btn btn-success">Vedi</a>
-                        <a href="{{route('admin.categories.edit', ['tag' => $tag->id])}}"  class="btn btn-warning">Modifica</a>
+                    <td class="text-center">
+                      <a href="{{route('admin.tags.show', ['tag' => $tag->id])}}" class="btn btn-success">Vedi</a>
+                    </td>
+                        {{-- <a href="{{route('admin.categories.edit', ['tag' => $tag->id])}}"  class="btn btn-warning">Modifica</a>
                         <form class="d-inline-block" action="{{route('admin.categories.destroy', ['tag' => $tag])}}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger">Elimina</button>
-                        </form>
-                    </td>  --}}
+                        </form> --}}
                 </tr>
                 @endforeach
             </tbody>
