@@ -18,7 +18,7 @@
                 <th scope="col">Author</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Category</th>
-                <th scope="col">Tags</th>
+                <th scope="col" class="text-center">Tags</th>
                 <th scope="col" class="text-center">Gestisci</th>
               </tr>
             </thead>
@@ -32,9 +32,13 @@
                     <td>{{($post->category)?$post->category->name:'Nessuna Categoria'}}</td>
                     <td>
                       @if (count($post->tags))
-                        @foreach ($post->tags as $tag)
-                          - {{($tag->name)}}
-                        @endforeach
+                        <ul>
+                          @foreach ($post->tags as $tag)
+                          <li>
+                            {{($tag->name)}}
+                          </li> 
+                            @endforeach
+                        </ul>
                       @else
                         <div>Nessun Tag</div>
                       @endif

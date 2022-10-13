@@ -64,6 +64,28 @@
                     </div>
                 @enderror
             </div>
+            {{-- TAG --}}
+            <div class="form-group mb-3">
+                <div>Choose a tag:</div>
+                <div class="d-flex">
+                    @foreach ($tags as $tag)
+                    <div class="form-group form-check mx-2">
+                        @if ($errors->any())
+                            <input {{(in_array($tag->id, old('tags', [])))?'checked':''}} name="tags[]" type="checkbox" class="form-check-input" id="tag_{{$tag->id}}" value="{{$tag->id}}">
+                            <label class="form-check-label" for="tag_{{$tag->id}}">{{$tag->name}}</label>
+                        @else
+                            <input {{($post->tags->contains($tag))?'checked':''}} name="tags[]" type="checkbox" class="form-check-input" id="tag_{{$tag->id}}" value="{{$tag->id}}">
+                            <label class="form-check-label" for="tag_{{$tag->id}}">{{$tag->name}}</label>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+                @error('tags')
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
             <button type="submit" class="btn btn-success">Applica Modifiche</button>
             <a class="btn btn-primary d-inline-block" href="{{route('admin.posts.index')}}">Annulla</a>
         </form>

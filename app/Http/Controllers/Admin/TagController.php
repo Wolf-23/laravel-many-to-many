@@ -57,7 +57,7 @@ class TagController extends Controller
             $data = $request->all();
             $tag = new Tag;
             $tag->fill($data);
-            $slug = $this->slugCalc($tag->title);
+            $slug = $this->slugCalc($tag->name);
             $tag->slug = $slug;
             $tag->save();
             return redirect()->route('admin.tags.index')->with('status', 'Tag creato con successo!');
@@ -80,9 +80,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -92,9 +92,20 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required|max:255'
+            ]
+        );
+        $data = $request->all();
+        if ($tag->name !== $data['name']) {
+            $data['slug'] = $this->slugCalc($data['name']);
+        }
+        $tag->update($data);
+        $tag->save();
+        return redirect()->route('admin.tags.index')->with('status', 'La modifica al tag è stata apportata!');
     }
 
     /**
@@ -103,8 +114,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->posts()->sync([]);
+        $tag->delete();
+        return redirect()->route('admin.tags.index')->with('deleted', 'Il tag è stato eliminato!');
     }
 }

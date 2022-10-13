@@ -28,13 +28,14 @@
                     <td class="px-5">{{count($tag->posts)}}</td>
                     <td class="text-center">
                       <a href="{{route('admin.tags.show', ['tag' => $tag->id])}}" class="btn btn-success">Vedi</a>
+                      <a href="{{route('admin.tags.edit', ['tag' => $tag->id])}}"  class="btn btn-warning">Modifica</a>
+                      <form class="d-inline-block" action="{{route('admin.tags.destroy', ['tag' => $tag])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Elimina</button>
+                      </form>
                     </td>
-                        {{-- <a href="{{route('admin.categories.edit', ['tag' => $tag->id])}}"  class="btn btn-warning">Modifica</a>
-                        <form class="d-inline-block" action="{{route('admin.categories.destroy', ['tag' => $tag])}}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-danger">Elimina</button>
-                        </form> --}}
+                        
                 </tr>
                 @endforeach
             </tbody>

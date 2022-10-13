@@ -30,9 +30,13 @@
                     <td>{{($post->category)?$post->category->name:'Nessuna Categoria'}}</td>
                     <td>
                       @if (count($post->tags))
+                      <ul>
                         @foreach ($post->tags as $tag)
-                          - {{($tag->name)}}
-                        @endforeach
+                        <li>
+                          {{($tag->name)}}
+                        </li> 
+                          @endforeach
+                      </ul>
                       @else
                         <div>Nessun Tag</div>
                       @endif

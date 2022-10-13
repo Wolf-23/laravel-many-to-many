@@ -95,8 +95,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -114,7 +115,8 @@ class PostController extends Controller
                 'media' => 'required|max:255|url',
                 'author' => ['required', Rule::in(['Simone Giusti', 'Alessio Vietri', 'Jacopo Damiani'])],
                 'content' => 'required|max:65535',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'exists:tags,id'
             ]
         );
         $data = $request->all();
@@ -123,6 +125,11 @@ class PostController extends Controller
         }
         $post->update($data);
         $post->save();
+        if(array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
         return redirect()->route('admin.posts.index')->with('status', 'La modifica al post è stata apportata!');
     }
 
@@ -134,6 +141,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('deleted', 'Il post è stato eliminato!');
     }
