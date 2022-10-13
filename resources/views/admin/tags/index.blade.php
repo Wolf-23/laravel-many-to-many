@@ -3,13 +3,6 @@
 @section('content')
     <div class="container">
       <a href="{{route('admin.tags.create')}}" class="btn btn-success mb-3">Crea Nuovo Tag</a>
-        {{-- <div class="d-flex justify-content-between">
-        <div>
-          <a href="{{route('admin.posts.simone')}}" class="btn btn-primary mb-3">Post Simone</a>
-          <a href="{{route('admin.posts.alessio')}}" class="btn btn-primary mb-3">Post Alessio</a>
-          <a href="{{route('admin.posts.jacopo')}}" class="btn btn-primary mb-3">Post Jacopo</a>
-        </div>
-      </div> --}}
         <table class="table table-dark">
             <thead>
               <tr>
